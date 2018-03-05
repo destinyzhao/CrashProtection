@@ -21,7 +21,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [self crashDic];
+    [self crashSelector];
 };
 
 - (void)crashSelector
@@ -40,6 +40,8 @@
         [array addObject:nil];
     }
     NSLog(@"array is :%@",array);
+    
+    [array objectAtIndex:20];
 }
 
 - (void)crashDic

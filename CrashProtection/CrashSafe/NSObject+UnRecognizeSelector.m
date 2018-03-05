@@ -9,6 +9,7 @@
 #import "NSObject+UnRecognizeSelector.h"
 #import <objc/runtime.h>
 #import "ForwardingTarget.h"
+#import "NSObject+Swizzling.h"
 
 static ForwardingTarget *_target = nil;
 
@@ -18,7 +19,9 @@ static ForwardingTarget *_target = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _target = [ForwardingTarget new];
-        not_recognize_selector_classMethodSwizzle([self class], @selector(forwardingTargetForSelector:), @selector(doesnot_recognize_selector_swizzleForwardingTargetForSelector:));
+        [NSObject exchangeInstanceMethodWithSelfClass:[self class] originalSelector:@selector(forwardingTargetForSelector:) swizzledSelector:@selector(doesnot_recognize_selector_swizzleForwardingTargetForSelector:)];
+        
+        //not_recognize_selector_classMethodSwizzle([self class], @selector(forwardingTargetForSelector:), @selector(doesnot_recognize_selector_swizzleForwardingTargetForSelector:));
     });
 }
 
